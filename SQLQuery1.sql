@@ -1,7 +1,18 @@
 create database Examinationsystem
 use Examinationsystem
 create schema Examinationsystem
-
+ALTER schema Examinationsystem transfer Student
+ALTER schema Examinationsystem transfer [dbo].[MCQ_Question]
+ALTER schema Examinationsystem transfer [dbo].[Intake]
+ALTER schema Examinationsystem transfer [dbo].[Instructor]
+ALTER schema Examinationsystem transfer [dbo].[Exam_Question]
+ALTER schema Examinationsystem transfer [dbo].[Exam]
+ALTER schema Examinationsystem transfer [dbo].[Course]
+ALTER schema Examinationsystem transfer [dbo].[Branch]
+ALTER schema Examinationsystem transfer [dbo].[Student_Exam_Result]
+ALTER schema Examinationsystem transfer [dbo].[StudentAnswers]
+ALTER schema Examinationsystem transfer [dbo].[T_F_Question]
+ALTER schema Examinationsystem transfer [dbo].[Track]
 CREATE TABLE Student 
 (
     ID INT PRIMARY KEY IDENTITY(1,1), -- Auto-incrementing primary key
@@ -21,6 +32,12 @@ create table Instructror
  Username varchar(30),
  Ins_password varchar (30)
 )
+alter table Instructror 
+add constraint c1 unique (Email)
+
+ALTER TABLE Instructror
+ADD CONSTRAINT check_password_not_empty CHECK (Ins_password IS NOT NULL AND Ins_password != '');
+
 create table Course 
 ( 
     Course_Id int primary key identity (1,1),
@@ -70,6 +87,10 @@ create table T_F_Question
  Option2 varchar(5),
  Dgree int 
 )
+alter table T_F_Question ALTER column correct_Answer varchar(1) 
+alter table T_F_Question ALTER column Option2 varchar(1) 
+alter table T_F_Question add constraint c4 check (Option1='T' and Option2='F')
+alter table T_F_Question add constraint c5 check (correct_Answer='T' or correct_Answer='F')
 
 create table MCQ_Question 
 ( 

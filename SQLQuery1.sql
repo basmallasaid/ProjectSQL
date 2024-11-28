@@ -45,7 +45,7 @@ create table Course
 	descriptions varchar(100),
 	Max_degree int ,
 	Min_dgree int,
-	Ins_Id int foreign key references  Instructror (Instructor_ID)
+	Ins_Id int foreign key references Instructor (ID)
 )
 
 CREATE TABLE Student 
@@ -62,6 +62,7 @@ create table Exam
  Exam_id int primary key ,
  StartTime date,
  End_time date,
+ E_Date date, 
  Total  int ,
  exam_type varchar(40),
  Course_id int foreign key references Course(Course_Id)
@@ -69,7 +70,7 @@ create table Exam
 
  create table Branch 
  (
-  Branch_Id int primary key ,
+  Branch_Id int primary key identity(1,1),
   Branch_name varchar(30),
  )
  create table Track 
@@ -102,7 +103,7 @@ create table MCQ_Question
  Option3 varchar(100),
  Option4 varchar(100),
  Degree int 
- )
+)
 
  CREATE TABLE StudentAnswers (
     ExamID INT NOT NULL,
@@ -116,18 +117,28 @@ create table Exam_Question
 ID int primary key identity(1,1),
 Exam_Id int foreign key references Exam(Exam_id),
 MCQ_id int foreign key references MCQ_Question(ID),
-T_F_ID int foreign key references T_F_Question(ID),
-Student_Answer Text 
+TF_ID int foreign key references TrueFalseQue(ID),
+Student_Answer varchar(100) 
 )
 
 Create table Student_Exam_Result 
 (
 ID int primary key identity(1,1),
-Stu_ID int foreign key references Student(ID),
-Cour_ID int foreign key references Course(Course_Id)
+Std_ID int foreign key references Student(ID),
+Crs_ID int foreign key references Course(Course_Id)
 )
 create table Intake 
 (
-intake_ID int primary key identity (1,1),
-intake_name varchar(40)
+Intake_ID int primary key identity (1,1),
+Intake_name varchar(40)
+)
+
+CREATE Table InfoSystem
+(
+	DataID int primary KEY identity (1 , 1),
+	Std_ID int foreign key references Student(ID),
+	Crs_ID int foreign key references Course(Course_Id),
+	Intake_ID int foreign key references Intake(Intake_ID),
+	Branch_ID int foreign key references Branch(Branch_Id),
+	Track_ID int foreign key references Track(track_id)
 )
